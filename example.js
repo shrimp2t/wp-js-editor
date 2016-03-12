@@ -4,6 +4,9 @@ jQuery(  document ).ready( function( $ ){
     //console.log( tinyMCE.get('__test_editor') );
 
     $( 'textarea').wp_js_editor();
+    $( 'textarea').on( 'change keyup', function(){
+        console.log( $( this).val() );
+    } );
 
     $( window).on( 'my_tinymce_setup', function(){
         console.log( 'triggerd' );

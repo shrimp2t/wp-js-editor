@@ -31,17 +31,17 @@
 (function ( $ ) {
 
     window._wpEditor = {
-        init: function( id , content ){
+        init: function( id , content, settings ){
             var _id = '__wp_mce_editor__';
             var _tpl =  $( '#_wp-mce-editor-tpl').html();
             if (  typeof content === "undefined"  ){
                 content = '';
             }
 
-            if (  typeof tinyMCEPreInit.mceInit[ _id ]  !== "undefined" ) {
+            if (  typeof window.tinyMCEPreInit.mceInit[ _id ]  !== "undefined" ) {
 
-                var tmceInit = _.clone( tinyMCEPreInit.mceInit[_id] );
-                var qtInit = _.clone( tinyMCEPreInit.qtInit[_id] );
+                var tmceInit = _.clone( window.tinyMCEPreInit.mceInit[_id] );
+                var qtInit = _.clone( window.tinyMCEPreInit.qtInit[_id] );
 
                 var tpl = _tpl.replace(new RegExp(_id,"g"), id );
                 var template =  $( tpl );
@@ -60,7 +60,20 @@
                 tmceInit.init_instance_callback = function( editor ){
                     //switchEditors.go( new_id, 'tmce' );
                     // $wrap.removeClass( 'html-active').addClass( 'tmce-active' );
-                   // console.log( 'Init' );
+                    if (  typeof settings === 'object' ) {
+                        if (settings.sync_id !== '') {
+                            if (typeof settings.sync_id === 'string') {
+                                editor.on('keyup change', function (e) {
+                                    $('#' + settings.sync_id).val(editor.getContent() ).trigger('change');
+                                });
+                            } else {
+                                editor.on('keyup change', function (e) {
+                                    settings.sync_id.val( editor.getContent() ).trigger('change');
+                                });
+                            }
+                        }
+                    }
+
                 };
 
                 tinyMCEPreInit.mceInit[ id ] = tmceInit;
@@ -108,7 +121,7 @@
                 }
             }
 
-            $( '#'+id).val( content );
+            $( '#'+id ).val( content );
         }
 
     };
@@ -119,7 +132,7 @@
         // This is the easiest way to have default options.
         if ( options !== 'remove' ) {
             options = $.extend({
-                option: ""
+                sync_id: "", // sync to another text area
             }, options );
         } else{
             options =  'remove';
@@ -138,7 +151,7 @@
             if ( 'remove' !== options ) {
                 window._wpEditorBackUp = window._wpEditorBackUp || {};
                 window._wpEditorBackUp[ id ] =  edit_area;
-                window._wpEditor.init( id, edit_area.val() );
+                window._wpEditor.init( id, edit_area.val(), options );
             } else {
 
                 window._wpEditor.remove( id );
