@@ -12,7 +12,7 @@
             control.editing_editor = $( '<div id="wpe-'+control.editing_id+'" class="modal-wp-js-editor"><textarea id="wpe-for-'+control.editing_id+'"></textarea></div>');
             var content = control.editing_area.val();
             // Load default value
-            $( 'textarea', control.editing_editor).val( ccontent );
+            $( 'textarea', control.editing_editor).val( content );
             control.preview.html( content );
 
             $( 'body' ).on( 'click', '#customize-controls, .customize-section-back', function( e ) {
@@ -21,7 +21,7 @@
                     control.editing_editor.removeClass( 'wpe-active' );
                 }
             } );
-            
+
             control._init();
 
         },
