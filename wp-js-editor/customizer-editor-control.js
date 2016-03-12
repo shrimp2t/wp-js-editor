@@ -11,9 +11,13 @@
             control.preview = $( '<div class="wp-js-editor-preview"></div>');
             control.editing_editor = $( '<div id="wpe-'+control.editing_id+'" class="modal-wp-js-editor"><textarea id="wpe-for-'+control.editing_id+'"></textarea></div>');
 
-            $( 'body' ).on( 'click', '.customize-section-back', function( e ) {
+            $( 'body' ).on( 'click', '#customize-controls, .customize-section-back', function( e ) {
                 e.preventDefault(); // Keep this AFTER the key filter above
-                control.editing_editor.hide();
+                console.log( e.target );
+                if ( ! $( e.target ).is( control.preview ) ) {
+                    control.editing_editor.removeClass( 'wpe-active' );
+                }
+
             } );
             //console.log( settingValue );
             //new RepeatableCustomize( control, jQuery );
@@ -32,7 +36,7 @@
 
             control.preview.on( 'click', function( e ){
                 e.preventDefault(); // Keep this AFTER the key filter above
-                control.editing_editor.show();
+                control.editing_editor.toggleClass( 'wpe-active' );
             } );
 
             control.container.find( '.wp-js-editor').addClass( 'wp-js-editor-active' );

@@ -23,7 +23,7 @@ body .wp-full-overlay{
 
 .modal-wp-js-editor {
     width: 500px;
-    display: block;
+    display: none;
     position: absolute;
     left: 0px;
     top: 0px;
@@ -31,4 +31,7 @@ body .wp-full-overlay{
     height: 100%;
     background: #FFFFFF;
     padding: 15px;
+}
+.modal-wp-js-editor.wpe-active {
+    display: block;
 }
