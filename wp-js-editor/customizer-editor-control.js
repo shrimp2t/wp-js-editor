@@ -10,18 +10,18 @@
             control.editing_id = control.editing_area.attr( 'id' ) || '';
             control.preview = $( '<div class="wp-js-editor-preview"></div>');
             control.editing_editor = $( '<div id="wpe-'+control.editing_id+'" class="modal-wp-js-editor"><textarea id="wpe-for-'+control.editing_id+'"></textarea></div>');
+            var content = control.editing_area.val();
+            // Load default value
+            $( 'textarea', control.editing_editor).val( ccontent );
+            control.preview.html( content );
 
             $( 'body' ).on( 'click', '#customize-controls, .customize-section-back', function( e ) {
                 e.preventDefault(); // Keep this AFTER the key filter above
-                console.log( e.target );
                 if ( ! $( e.target ).is( control.preview ) ) {
                     control.editing_editor.removeClass( 'wpe-active' );
                 }
-
             } );
-            //console.log( settingValue );
-            //new RepeatableCustomize( control, jQuery );
-            //console.log( control );
+            
             control._init();
 
         },
