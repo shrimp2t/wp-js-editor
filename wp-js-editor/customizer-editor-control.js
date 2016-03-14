@@ -54,6 +54,7 @@
             control.preview.on( 'click', function( e ){
                 $( '.modal-wp-js-editor').removeClass( 'wpe-active' );
                 control.editing_editor.toggleClass( 'wpe-active' );
+                tinyMCE.get( control.editor_id ).focus();
                 control._resize();
                 return false;
             } );
