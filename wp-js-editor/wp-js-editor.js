@@ -43,7 +43,10 @@
                 var tmceInit = _.clone( window.tinyMCEPreInit.mceInit[_id] );
                 var qtInit = _.clone( window.tinyMCEPreInit.qtInit[_id] );
 
-                var tpl = _tpl.replace(new RegExp(_id,"g"), id );
+                tmceInit = $.extend( tmceInit , settings.tinymce );
+                qtInit   = $.extend( qtInit , settings.qtag );
+
+                var tpl = _tpl.replace( new RegExp(_id,"g"), id );
                 var template =  $( tpl );
                 $( "#"+id ).replaceWith( template );
                 // set content
@@ -59,8 +62,12 @@
 
                 tmceInit.init_instance_callback = function( editor ){
                     //switchEditors.go( new_id, 'tmce' );
-                    // $wrap.removeClass( 'html-active').addClass( 'tmce-active' );
                     if (  typeof settings === 'object' ) {
+                        // editor.theme.resizeTo('100%', 500);
+                        if( typeof settings.init_instance_callback === "function" ) {
+                            settings.init_instance_callback( editor );
+                        }
+
                         if (settings.sync_id !== '') {
                             if (typeof settings.sync_id === 'string') {
                                 editor.on('keyup change', function (e) {
@@ -73,7 +80,6 @@
                             }
                         }
                     }
-
                 };
 
                 tinyMCEPreInit.mceInit[ id ] = tmceInit;
@@ -111,7 +117,7 @@
                 content = editor.getContent();
                 editor.remove();
             } else {
-                content = $( '#'+id).val();
+                content = $( '#'+id ).val();
             }
 
             if ( $( '#wp-' + id + '-wrap').length > 0 ) {
@@ -133,11 +139,13 @@
         if ( options !== 'remove' ) {
             options = $.extend({
                 sync_id: "", // sync to another text area
+                tinymce: {}, // tinymce setting
+                qtag:    {}, // quick tag settings
+                init_instance_callback: function(){} // quick tag settings
             }, options );
         } else{
             options =  'remove';
         }
-
 
         return this.each( function( ) {
             var edit_area  =  $( this );
@@ -153,11 +161,8 @@
                 window._wpEditorBackUp[ id ] =  edit_area;
                 window._wpEditor.init( id, edit_area.val(), options );
             } else {
-
                 window._wpEditor.remove( id );
             }
-
-
 
         });
 

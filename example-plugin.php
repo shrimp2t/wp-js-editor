@@ -60,6 +60,43 @@ function example_customize_register( $wp_customize ) {
     ));
 
 
+    // Contact Text
+    $wp_customize->add_setting( 'example_wp_js_editor_2',
+        array(
+            'sanitize_callback' => 'wp_kses_post',
+            'default'           => '',
+        )
+    );
+    $wp_customize->add_control( new WP_Editor_Custom_Control(
+        $wp_customize,
+        'example_wp_js_editor_2',
+        array(
+            'label'     	=> esc_html__('Editor 2', 'onepress'),
+            'section' 		=> 'example_wp_js_editor',
+            'description'   => '',
+        )
+    ));
+
+
+    // Contact Text
+    $wp_customize->add_setting( 'example_wp_js_editor_3',
+        array(
+            'sanitize_callback' => 'wp_kses_post',
+            'default'           => '',
+        )
+    );
+    $wp_customize->add_control( new WP_Editor_Custom_Control(
+        $wp_customize,
+        'example_wp_js_editor_3',
+        array(
+            'label'     	=> esc_html__('Editor 3', 'onepress'),
+            'section' 		=> 'example_wp_js_editor',
+            'description'   => '',
+        )
+    ));
+
+
+
 }
 add_action( 'customize_register', 'example_customize_register', 55 );
 
