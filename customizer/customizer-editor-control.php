@@ -18,11 +18,11 @@ class WP_Editor_Custom_Control extends WP_Customize_Control
      * @return void
      */
     public function enqueue() {
+        
+        wp_register_style( 'customizer-editor-control',   WP_JS_EDITOR_URL . 'customizer/customizer-editor.css' );
 
-        wp_enqueue_script( 'wp_js_editor', WP_JS_EDITOR_URL . 'wp-js-editor/wp-js-editor.js', array( 'customize-controls' ) );
-        wp_register_style( 'customizer-editor-control',   WP_JS_EDITOR_URL . 'wp-js-editor/customizer-editor.css' );
         wp_register_script( 'wp_js_editor', WP_JS_EDITOR_URL . 'wp-js-editor/wp-js-editor.js', array( 'customize-controls' ) );
-        wp_register_script( 'customizer-editor-control', WP_JS_EDITOR_URL . 'wp-js-editor/customizer-editor-control.js', array( 'customize-controls' ) );
+        wp_register_script( 'customizer-editor-control', WP_JS_EDITOR_URL . 'customizer/customizer-editor-control.js', array( 'customize-controls' ) );
 
         wp_enqueue_script( 'wp_js_editor' );
         wp_enqueue_script( 'customizer-editor-control' );
@@ -30,7 +30,7 @@ class WP_Editor_Custom_Control extends WP_Customize_Control
 
 
         if ( ! class_exists( '_WP_Editors' ) ) {
-            require( ABSPATH . WPINC . '/class-wp-editor.php' );
+            require(ABSPATH . WPINC . '/class-wp-editor.php');
         }
 
         add_action( 'customize_controls_print_footer_scripts', array( __CLASS__, 'enqueue_editor' ),  2 );
@@ -39,7 +39,6 @@ class WP_Editor_Custom_Control extends WP_Customize_Control
     }
 
     static function enqueue_editor(){
-
         ?>
         <script id="_wp-mce-editor-tpl" type="text/html">
             <?php wp_editor( '', '__wp_mce_editor__' ); ?>

@@ -1,6 +1,12 @@
 <?php
 /*
 Plugin Name: WP JS Editor
+Plugin URI: http://www.famethemes.com/
+Description:
+Author: famethemes
+Author URI:  http://www.famethemes.com/
+Version: 1.0.0
+License: GPL version 2 or later - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
 define( 'WP_JS_EDITOR_URL', trailingslashit( plugins_url( '', __FILE__) ) );
@@ -31,7 +37,7 @@ add_action( 'wp_footer', 'example_enqueue_my_custom_js', 99 );
 
 function example_customize_register( $wp_customize ) {
 
-    require_once dirname( __FILE__ ).'/wp-js-editor/customizer-editor-control.php';
+    require_once dirname( __FILE__ ).'/customizer/customizer-editor-control.php';
 
     $wp_customize->add_section( 'example_wp_js_editor' ,
         array(
